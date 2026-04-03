@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Website Maker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">AI Website Generator</h1>
+
+    <form id="websiteForm" class="space-y-4">
+      <input type="text" id="siteName" placeholder="Website Name" class="w-full p-2 border rounded" required>
+      <input type="text" id="siteType" placeholder="Website Type (e.g., Portfolio, Blog)" class="w-full p-2 border rounded" required>
+      <textarea id="siteDescription" placeholder="Short Description" class="w-full p-2 border rounded" required></textarea>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Generate Website</button>
+    </form>
+
+    <div id="output" class="mt-6"></div>
+  </div>
+
+  <script>
+    document.getElementById('websiteForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const name = document.getElementById('siteName').value;
+      const type = document.getElementById('siteType').value;
+      const desc = document.getElementById('siteDescription').value;
+
+      const html = `
+      <!DOCTYPE html>
+      <html lang=\"en\">
+      <head>
+        <meta charset=\"UTF-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+        <title>${name}</title>
+        <script src=\"https://cdn.tailwindcss.com\"></script>
+      </head>
+      <body class=\"bg-gray-50\">
+        <header class=\"bg-blue-600 text-white p-6 text-center\">
+          <h1 class=\"text-3xl font-bold\">${name}</h1>
+          <p class=\"mt-2\">${desc}</p>
+        </header>
+        <main class=\"p-6\">
+          <section class=\"my-4\">
+            <h2 class=\"text-2xl font-bold\">About</h2>
+            <p>This is a sample ${type} website created with AI!</p>
+          </section>
+          <section class=\"my-4\">
+            <h2 class=\"text-2xl font-bold\">Services</h2>
+            <ul class=\"list-disc ml-6\">
+              <li>Service 1</li>
+              <li>Service 2</li>
+            </ul>
+          </section>
+        </main>
+        <footer class=\"bg-gray-800 text-white p-6 text-center\">&copy; ${new Date().getFullYear()} ${name}</footer>
+      </body>
+      </html>
+      `;
+
+      // Display and offer download
+      const blob = new Blob([html], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      document.getElementById('output').innerHTML = `<p class=\"mb-2\">Your website is ready! <a href='${url}' download='${name}.html' class=\"text-blue-500 underline\">Download HTML</a></p>`;
+    });
+  </script>
+</body>
+</html>
